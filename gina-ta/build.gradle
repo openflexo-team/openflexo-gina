@@ -1,0 +1,11 @@
+dependencies {
+  // openflexo dep
+  implementation flexoFoundation()
+  api ginaApi()
+  // external dep
+  // testing dep
+  testImplementation flexoFoundationTest()
+
+   // Test resource center
+  testRuntimeOnly project(':gina-ta-test-rc')
+}
