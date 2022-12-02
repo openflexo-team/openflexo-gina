@@ -234,7 +234,7 @@ public class FMLControlledFIBVirtualModelInstanceModuleView extends JPanel
 	}
 
 	public void switchToEditMode() {
-		FlexoTask switchToEditMode = new FlexoTask("opening_fib_editor") {
+		FlexoTask switchToEditMode = new FlexoTask("OpenFIBEditor", "opening_fib_editor") {
 			@Override
 			public void performTask() throws InterruptedException {
 				setExpectedProgressSteps(50);
@@ -627,7 +627,7 @@ public class FMLControlledFIBVirtualModelInstanceModuleView extends JPanel
 	public void removeFromSelected(Vector<? extends FlexoObject> objects) {
 		getSelectionManager().removeFromSelected(objects);
 	}
-	
+
 	@Override
 	public void setSelectedObjects(Vector<? extends FlexoObject> objects) {
 		getSelectionManager().setSelectedObjects(objects);

@@ -180,8 +180,8 @@ public class GINAAdapterController extends TechnologyAdapterController<GINATechn
 	}
 
 	@Override
-	public ModuleView<?> createModuleViewForMasterObject(final TechnologyObject<GINATechnologyAdapter> object, final FlexoController controller,
-			final FlexoPerspective perspective) {
+	public ModuleView<?> createModuleViewForMasterObject(final TechnologyObject<GINATechnologyAdapter> object,
+			final FlexoController controller, final FlexoPerspective perspective) {
 		if (object instanceof GINAFIBComponent) {
 			return new GINAModuleView((GINAFIBComponent) object, controller, perspective);
 		}
@@ -205,7 +205,7 @@ public class GINAAdapterController extends TechnologyAdapterController<GINATechn
 	public boolean isRepresentableInModuleView(TechnologyObject<GINATechnologyAdapter> object) {
 		return object instanceof GINAFIBComponent;
 	}
-	
+
 	@Override
 	public FlexoObject getRepresentableMasterObject(TechnologyObject<GINATechnologyAdapter> object) {
 		if (object instanceof GINAFIBComponent) {
@@ -213,11 +213,11 @@ public class GINAAdapterController extends TechnologyAdapterController<GINATechn
 		}
 		return null;
 	}
-	
+
 	public class LoadFIBEditor extends FlexoTask {
 
 		public LoadFIBEditor() {
-			super(getLocales().localizedForKey("loading_fib_editor"));
+			super("FIBEditorLoading", getLocales().localizedForKey("loading_fib_editor"));
 		}
 
 		@Override

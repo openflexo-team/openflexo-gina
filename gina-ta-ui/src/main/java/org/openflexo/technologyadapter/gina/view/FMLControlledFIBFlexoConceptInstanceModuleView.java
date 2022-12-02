@@ -210,7 +210,7 @@ public class FMLControlledFIBFlexoConceptInstanceModuleView extends JPanel imple
 	}
 
 	public void switchToEditMode() {
-		FlexoTask switchToEditMode = new FlexoTask("opening_fib_editor") {
+		FlexoTask switchToEditMode = new FlexoTask("OpenFIBEditor", "opening_fib_editor") {
 			@Override
 			public void performTask() throws InterruptedException {
 				setExpectedProgressSteps(50);
