@@ -95,8 +95,8 @@ public class GINAFIBComponentResourceFactory
 	/*public static GINAFIBComponentResource makeComponentResource(File componentFile,
 			GINATechnologyContextManager technologyContextManager) {
 		try {
-			ModelFactory factory = new ModelFactory(
-					ModelContextLibrary.getCompoundModelContext(GINAFIBComponentResource.class, FileFlexoIODelegate.class));
+			PamelaModelFactory factory = new PamelaModelFactory(
+					PamelaMetaModelLibrary.getCompoundModelContext(GINAFIBComponentResource.class, FileFlexoIODelegate.class));
 			GINAFIBComponentResourceImpl returned = (GINAFIBComponentResourceImpl) factory.newInstance(GINAFIBComponentResource.class);
 			returned.initName(componentFile.getName());
 			returned.setFlexoIODelegate(FileFlexoIODelegateImpl.makeFileFlexoIODelegate(componentFile, factory));
@@ -118,8 +118,8 @@ public class GINAFIBComponentResourceFactory
 	public static GINAFIBComponentResource retrieveComponentResource(File componentFile,
 			GINATechnologyContextManager technologyContextManager) {
 		try {
-			ModelFactory factory = new ModelFactory(
-					ModelContextLibrary.getCompoundModelContext(GINAFIBComponentResource.class, FileFlexoIODelegate.class));
+			PamelaModelFactory factory = new PamelaModelFactory(
+					PamelaMetaModelLibrary.getCompoundModelContext(GINAFIBComponentResource.class, FileFlexoIODelegate.class));
 			GINAFIBComponentResourceImpl returned = (GINAFIBComponentResourceImpl) factory.newInstance(GINAFIBComponentResource.class);
 			returned.initName(componentFile.getName());
 			returned.setFlexoIODelegate(FileFlexoIODelegateImpl.makeFileFlexoIODelegate(componentFile, factory));
