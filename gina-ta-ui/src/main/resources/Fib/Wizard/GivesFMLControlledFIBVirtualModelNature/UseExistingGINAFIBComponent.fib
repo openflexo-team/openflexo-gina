@@ -24,9 +24,9 @@
 			variable="component.selectableCondition" />
 		<Assignment id="9" mandatory="true"
 			value="data.serviceManager.resourceManager" variable="component.resourceManager" />
-		<Assignment id="10" mandatory="true" value="data.GINATechnologyAdapter"
+		<Assignment id="10" mandatory="true" value="data.gINATechnologyAdapter"
 			variable="component.technologyAdapter" />
-		<Assignment id="11" mandatory="true" value="data.GINAFIBComponentType"
+		<Assignment id="11" mandatory="true" value="data.gINAFIBComponentType"
 			variable="component.resourceDataClass" />
 	</Custom>
 	<FIBVariable id="12" name="data"

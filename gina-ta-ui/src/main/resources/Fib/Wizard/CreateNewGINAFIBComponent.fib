@@ -67,9 +67,9 @@
 			variable="component.selectableCondition" />
 		<Assignment id="39" mandatory="true"
 			value="data.serviceManager.resourceManager" variable="component.resourceManager" />
-		<Assignment id="40" mandatory="true" value="data.GINATechnologyAdapter"
+		<Assignment id="40" mandatory="true" value="data.gINATechnologyAdapter"
 			variable="component.technologyAdapter" />
-		<Assignment id="41" mandatory="true" value="data.GINAFIBComponentType"
+		<Assignment id="41" mandatory="true" value="data.gINAFIBComponentType"
 			variable="component.resourceDataClass" />
 	</Custom>
 	<Label id="42" name="Label2" align="left"
