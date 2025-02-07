@@ -111,7 +111,7 @@ public interface ConfigureGINAFIBComponent
 				}
 
 				if (msi == null) {
-					msi = (FreeModelSlotInstance<GINAFIBComponent, FIBComponentModelSlot>) modelSlot.makeActorReference(fibComponent, fci);
+					msi = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent>) modelSlot.makeActorReference(fibComponent, fci);
 					fci.addToActors(msi);
 				}
 

@@ -91,7 +91,7 @@ public class FMLControlledFIBVirtualModelInstanceModuleView extends JPanel
 
 	private FIBEditorController editorController;
 	private GINAFIBComponent component;
-	private FreeModelSlotInstance<GINAFIBComponent, FIBComponentModelSlot> modelSlotInstance;
+	private FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> modelSlotInstance;
 	private SelectionSynchronizedFIBJPanel<?> componentView;
 	private ValidationPanel validationPanel;
 
