@@ -73,7 +73,7 @@ import org.openflexo.toolbox.StringUtils;
 @ModelEntity
 @ImplementationClass(FIBComponentModelSlot.FIBComponentModelSlotImpl.class)
 @XMLElement
-public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent> {
+public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, GINAFIBComponentResource> {
 
 	@PropertyIdentifier(type = String.class)
 	public static final String TEMPLATE_COMPONENT_URI_KEY = "templateComponentURI";
@@ -116,7 +116,8 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent> {
 	@Override
 	public GINATechnologyAdapter getModelSlotTechnologyAdapter();
 
-	public static abstract class FIBComponentModelSlotImpl extends FreeModelSlotImpl<GINAFIBComponent> implements FIBComponentModelSlot {
+	public static abstract class FIBComponentModelSlotImpl extends FreeModelSlotImpl<GINAFIBComponent, GINAFIBComponentResource>
+			implements FIBComponentModelSlot {
 
 		protected String templateComponentURI;
 		private GINAFIBComponentResource templateResource;
@@ -319,7 +320,7 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent> {
 			}
 
 			@Override
-			public ModelSlot<GINAFIBComponent> getModelSlot() {
+			public FIBComponentModelSlot getModelSlot() {
 				return getOwner();
 			}
 

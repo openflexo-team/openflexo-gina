@@ -48,6 +48,7 @@ import org.openflexo.foundation.fml.rt.VirtualModelInstanceNature;
 import org.openflexo.foundation.nature.ScreenshotableNature;
 import org.openflexo.technologyadapter.gina.FIBComponentModelSlot;
 import org.openflexo.technologyadapter.gina.model.GINAFIBComponent;
+import org.openflexo.technologyadapter.gina.rm.GINAFIBComponentResource;
 
 /**
  * Define the "FML-controlled FIBComponent" nature of a {@link FMLRTVirtualModelInstance}<br>
@@ -88,7 +89,7 @@ public class FMLControlledFIBVirtualModelInstanceNature
 
 		FIBComponentModelSlot fibMS = virtualModelInstance.getVirtualModel().getModelSlots(FIBComponentModelSlot.class).get(0);
 
-		FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> msInstance = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent>) virtualModelInstance
+		FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent> msInstance = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent>) virtualModelInstance
 				.getModelSlotInstance(fibMS);
 
 		if (msInstance == null) {
@@ -102,7 +103,7 @@ public class FMLControlledFIBVirtualModelInstanceNature
 		return true;
 	}
 
-	public static FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> getModelSlotInstance(
+	public static FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent> getModelSlotInstance(
 			VirtualModelInstance<?, ?> virtualModelInstance) {
 		return INSTANCE._getModelSlotInstance(virtualModelInstance);
 
@@ -112,7 +113,7 @@ public class FMLControlledFIBVirtualModelInstanceNature
 		return INSTANCE._getGINAFIBComponent(virtualModelInstance);
 	}
 
-	private static FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> _getModelSlotInstance(
+	private static FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent> _getModelSlotInstance(
 			VirtualModelInstance<?, ?> virtualModelInstance) {
 
 		if (virtualModelInstance == null) {
@@ -130,12 +131,12 @@ public class FMLControlledFIBVirtualModelInstanceNature
 			e1.printStackTrace();
 		}
 
-		FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> returned = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent>) virtualModelInstance
+		FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent> returned = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent>) virtualModelInstance
 				.getModelSlotInstance(fibMS);
 		if (returned == null) {
 			// When, for some reasons, the msi is null or not weel configured, we do it again now
-			returned = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent>) fibMS.makeActorReference(fibComponent,
-					virtualModelInstance);
+			returned = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent>) fibMS
+					.makeActorReference(fibComponent, virtualModelInstance);
 			/*FIBComponentModelSlotInstanceConfiguration msiConfig = (FIBComponentModelSlotInstanceConfiguration) fibMS
 					.createConfiguration(virtualModelInstance, virtualModelInstance.getResourceCenter());
 			msiConfig.setOption(FIBComponentModelSlotInstanceConfigurationOption.ReadOnlyUseFIBComponent);
@@ -155,7 +156,8 @@ public class FMLControlledFIBVirtualModelInstanceNature
 
 	private static GINAFIBComponent _getGINAFIBComponent(VirtualModelInstance<?, ?> virtualModelInstance) {
 
-		FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> modelSlotInstance = _getModelSlotInstance(virtualModelInstance);
+		FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent> modelSlotInstance = _getModelSlotInstance(
+				virtualModelInstance);
 
 		if (modelSlotInstance != null) {
 			return modelSlotInstance.getAccessedResourceData();

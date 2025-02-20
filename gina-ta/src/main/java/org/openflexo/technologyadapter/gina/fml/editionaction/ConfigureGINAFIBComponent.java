@@ -58,6 +58,7 @@ import org.openflexo.pamela.annotations.ModelEntity;
 import org.openflexo.pamela.annotations.XMLElement;
 import org.openflexo.technologyadapter.gina.FIBComponentModelSlot;
 import org.openflexo.technologyadapter.gina.model.GINAFIBComponent;
+import org.openflexo.technologyadapter.gina.rm.GINAFIBComponentResource;
 
 /**
  * {@link EditionAction} used to configure a {@link FIBComponentModelSlot}
@@ -111,7 +112,8 @@ public interface ConfigureGINAFIBComponent
 				}
 
 				if (msi == null) {
-					msi = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent>) modelSlot.makeActorReference(fibComponent, fci);
+					msi = (FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent>) modelSlot
+							.makeActorReference(fibComponent, fci);
 					fci.addToActors(msi);
 				}
 

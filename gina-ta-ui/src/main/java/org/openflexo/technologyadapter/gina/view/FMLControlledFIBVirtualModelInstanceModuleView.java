@@ -64,6 +64,7 @@ import org.openflexo.technologyadapter.gina.controller.FMLControlledFIBControlle
 import org.openflexo.technologyadapter.gina.controller.GINAAdapterController;
 import org.openflexo.technologyadapter.gina.fml.FMLControlledFIBVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.gina.model.GINAFIBComponent;
+import org.openflexo.technologyadapter.gina.rm.GINAFIBComponentResource;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.SelectionSynchronizedFIBJPanel;
 import org.openflexo.view.SelectionSynchronizedModuleView;
@@ -91,7 +92,7 @@ public class FMLControlledFIBVirtualModelInstanceModuleView extends JPanel
 
 	private FIBEditorController editorController;
 	private GINAFIBComponent component;
-	private FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> modelSlotInstance;
+	private FreeModelSlotInstance<FIBComponentModelSlot, GINAFIBComponentResource, GINAFIBComponent> modelSlotInstance;
 	private SelectionSynchronizedFIBJPanel<?> componentView;
 	private ValidationPanel validationPanel;
 
