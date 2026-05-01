@@ -63,7 +63,7 @@ public interface FIBComponentRole extends FlexoRole<GINAFIBComponent> {
 		@SuppressWarnings("unchecked")
 		@Override
 		public ActorReference<GINAFIBComponent> makeActorReference(final GINAFIBComponent object, final FlexoConceptInstance fci) {
-			final AbstractVirtualModelInstanceModelFactory<?> factory = fci.getFactory();
+			final AbstractVirtualModelInstanceModelFactory factory = fci.getFactory();
 			final ModelObjectActorReference<GINAFIBComponent> returned = factory.newInstance(ModelObjectActorReference.class);
 			returned.setFlexoRole(this);
 			returned.setFlexoConceptInstance(fci);
