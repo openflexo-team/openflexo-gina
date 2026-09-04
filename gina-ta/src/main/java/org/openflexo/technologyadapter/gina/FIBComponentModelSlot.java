@@ -33,6 +33,11 @@ import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.annotations.DeclareEditionActions;
 import org.openflexo.foundation.fml.annotations.DeclareFetchRequests;
 import org.openflexo.foundation.fml.annotations.DeclareFlexoRoles;
+import org.openflexo.foundation.fml.annotations.FML;
+import org.openflexo.foundation.fml.annotations.FMLAttribute;
+import org.openflexo.foundation.fml.annotations.FMLAttribute.AttributeKind;
+import org.openflexo.foundation.fml.annotations.SeeAlso;
+import org.openflexo.foundation.fml.annotations.UsageExample;
 import org.openflexo.foundation.resource.FlexoResource;
 import org.openflexo.foundation.technologyadapter.FreeModelSlot;
 import org.openflexo.foundation.technologyadapter.ModelSlot;
@@ -73,6 +78,16 @@ import org.openflexo.toolbox.StringUtils;
 @ModelEntity
 @ImplementationClass(FIBComponentModelSlot.FIBComponentModelSlotImpl.class)
 @XMLElement
+@FML(
+		value = "FIBComponent",
+		description = "<html>This ModelSlot represents access to a GINAFIBComponent, a graphical user interface<br>"
+				+ "declared from a .fib template, whose variables are bound to the model through a list of assignments"
+				+ "</html>",
+		examples = { @UsageExample(
+				example = "GINAFIBComponent ui with GINA::FIBComponent(templateComponentURI=\"http://acme.org/MyComponent.fib\","
+						+ "assignments={VariableAssignment:(variable=\"data\",value=this)});",
+				description = "Declares a model slot called 'ui' bound to the 'MyComponent.fib' template, whose 'data' variable is this instance") },
+		references = { @SeeAlso(ConfigureGINAFIBComponent.class) })
 public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, GINAFIBComponentResource> {
 
 	@PropertyIdentifier(type = String.class)
@@ -84,6 +99,7 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 
 	@Getter(value = TEMPLATE_COMPONENT_URI_KEY)
 	@XMLAttribute
+	@FMLAttribute(value = TEMPLATE_COMPONENT_URI_KEY, required = true, description = "<html>URI of the .fib template component</html>")
 	public String getTemplateComponentURI();
 
 	@Setter(TEMPLATE_COMPONENT_URI_KEY)
@@ -98,6 +114,7 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 	@Getter(value = ASSIGNMENTS_KEY, cardinality = Cardinality.LIST, inverse = VariableAssignment.OWNER_KEY)
 	@XMLElement
 	@CloningStrategy(StrategyType.CLONE)
+	@FMLAttribute(value = ASSIGNMENTS_KEY, kind = AttributeKind.InstancesList)
 	public List<VariableAssignment> getAssignments();
 
 	@Setter(ASSIGNMENTS_KEY)
@@ -208,6 +225,7 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 	@ModelEntity
 	@ImplementationClass(VariableAssignment.VariableAssignmentImpl.class)
 	@XMLElement(xmlTag = "VariableAssignment")
+	@FML("VariableAssignment")
 	public static interface VariableAssignment extends ModelSlotObject<GINAFIBComponent> {
 		@PropertyIdentifier(type = FIBComponentModelSlot.class)
 		public static final String OWNER_KEY = "owner";
@@ -229,11 +247,16 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 
 		@Getter(value = VARIABLE_KEY)
 		@XMLAttribute
+		@FMLAttribute(value = VARIABLE_KEY, required = true, description = "<html>name of the variable declared by the .fib component</html>")
 		public String getVariable();
 
 		@Setter(VARIABLE_KEY)
 		public void setVariable(String variable);
 
+		/**
+		 * Deliberately NOT exposed as an {@link FMLAttribute}: it is only used as a fallback when the value binding is unset or invalid
+		 * (see GINAFIBComponent), and a Type-valued FML attribute would need an updater translating it into the current typing space.
+		 */
 		@Getter(value = VARIABLE_TYPE_KEY, isStringConvertable = true)
 		@XMLAttribute
 		public Type getVariableType();
@@ -243,6 +266,7 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 
 		@Getter(value = VALUE_KEY)
 		@XMLAttribute
+		@FMLAttribute(value = VALUE_KEY, required = true, description = "<html>value assigned to that variable</html>")
 		public DataBinding<Object> getValue();
 
 		@Setter(VALUE_KEY)
