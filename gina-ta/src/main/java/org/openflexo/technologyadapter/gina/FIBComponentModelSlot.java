@@ -99,7 +99,21 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 
 	@Getter(value = TEMPLATE_COMPONENT_URI_KEY)
 	@XMLAttribute
-	@FMLAttribute(value = TEMPLATE_COMPONENT_URI_KEY, required = true, description = "<html>URI of the .fib template component</html>")
+	/**
+	 * BEWARE: this URI is a plain string attribute, resolved lazily by {@link #getTemplateResource()} against the resource manager. When it
+	 * resolves to nothing, {@link org.openflexo.technologyadapter.gina.fml.FMLControlledFIBVirtualModelNature#hasNature} starts returning
+	 * false and the VirtualModel quietly loses its user interface, <b>with nothing logged</b> - the application just shows an empty panel.
+	 * 
+	 * <p>
+	 * {@link FIBComponentModelSlotMustReferenceNonNullTemplateResource} below does report it as a validation error, so the break is silent
+	 * at runtime rather than in validation - but that guard only fires if something actually validates the VirtualModel AND the GINA
+	 * technology adapter is activated, since the FML validation model is built from the activated adapters' model-slot classes. A suite that
+	 * only loads its models, or that activates other adapters, sees nothing. Note also that the rule's message key
+	 * <code>fib_component_model_slot_must_reference_nonnull_template_resource</code> is absent from the GINA dictionaries, so the error
+	 * arrives un-localized.
+	 */
+	@FMLAttribute(value = TEMPLATE_COMPONENT_URI_KEY, required = true, description = "<html>URI of the .fib template component."
+			+ "<br>An unresolved URI costs the VirtualModel its FML-controlled-FIB nature, with nothing logged at run-time.</html>")
 	public String getTemplateComponentURI();
 
 	@Setter(TEMPLATE_COMPONENT_URI_KEY)

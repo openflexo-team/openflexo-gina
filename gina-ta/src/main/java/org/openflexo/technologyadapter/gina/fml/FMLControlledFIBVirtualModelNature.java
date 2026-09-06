@@ -67,6 +67,18 @@ public class FMLControlledFIBVirtualModelNature implements VirtualModelNature {
 
 	/**
 	 * Return boolean indicating if supplied {@link VirtualModel} might be interpreted as a FML-controlled FIBComponent
+	 * 
+	 * <p>
+	 * Two things worth knowing about this answer:
+	 * <ul>
+	 * <li>a <code>templateComponentURI</code> that resolves to nothing makes this return <b>false with nothing logged</b>, so the
+	 * VirtualModel simply stops offering its user interface. FML validation does report the unresolved URI - see
+	 * {@link org.openflexo.technologyadapter.gina.FIBComponentModelSlot} - but only when the GINA adapter is activated and something
+	 * actually validates the VirtualModel;</li>
+	 * <li><code>getModelSlots()</code> also reports the slots a <em>container</em> declares, so a contained VirtualModel that declares no
+	 * GINA slot of its own claims the nature of its container and would be shown with the container's component. Filter on
+	 * <code>modelSlot.getFlexoConcept() == virtualModel</code> where ownership is what you mean.</li>
+	 * </ul>
 	 */
 	@Override
 	public boolean hasNature(VirtualModel virtualModel) {
