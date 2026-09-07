@@ -56,7 +56,17 @@ import org.openflexo.technologyadapter.gina.model.GINAFIBComponent;
  * 
  * @author sylvain
  * 
+ *
+ * @deprecated <b>Replaced by the container convention.</b> A user interface is no longer federated through a model slot pointing at a
+ *             <code>.fib</code> by URI: it is an ordinary GINA component stored beside the FML source, in the <code>Xxx.fml/</code>
+ *             container, and resolved by <code>FlexoConcept.getUIComponentResource()</code>.
+ *             <p>
+ *             The model slot carried no instance-level data - its instance held only the URI of a shared, read-only template - and its link
+ *             broke <b>silently</b>: an URI resolving to nothing simply made the VirtualModel lose its nature, with nothing logged.
+ *             <p>
+ *             This whole technology adapter is to be removed once its remaining consumers are ported.
  */
+@Deprecated
 public class FMLControlledFIBVirtualModelNature implements VirtualModelNature {
 
 	public static FMLControlledFIBVirtualModelNature INSTANCE = new FMLControlledFIBVirtualModelNature();
