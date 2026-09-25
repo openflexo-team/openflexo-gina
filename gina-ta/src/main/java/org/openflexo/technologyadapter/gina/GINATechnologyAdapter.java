@@ -174,7 +174,8 @@ public class GINATechnologyAdapter extends TechnologyAdapter<GINATechnologyAdapt
 		GINAResourceRepository<I> returned = resourceCenter.retrieveRepository(GINAResourceRepository.class, this);
 		if (returned == null) {
 			returned = GINAResourceRepository.instanciateNewRepository(this, resourceCenter);
-			resourceCenter.registerRepository(returned, GINAResourceRepository.class, this);
+			// Another thread may have registered one meanwhile: use the registered one (CORE-D-25)
+			returned = resourceCenter.registerRepository(returned, GINAResourceRepository.class, this);
 		}
 		return returned;
 	}
