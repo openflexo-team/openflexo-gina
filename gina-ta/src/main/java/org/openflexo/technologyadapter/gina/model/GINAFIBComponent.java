@@ -110,6 +110,29 @@ public interface GINAFIBComponent
 	 * Ensure that the whole binding context (BindingFactory and BindingModel) is bound to an {@link VirtualModel} using the specifications
 	 * given by a {@link FIBComponentModelSlot}
 	 * 
+	 * <p>
+	 * Call this before validating or showing the component: without it every binding on the <code>data</code> variable is reported broken.
+	 * 
+	 * <p>
+	 * <b>It also swaps the expression parser.</b> The {@link FMLFIBBindingFactory} installed here inherits
+	 * <code>FMLBindingFactory.parseExpression()</code>, which delegates to the <em>FML</em> parser - not the grammar the FIB editor accepted
+	 * the bindings with. Consequences measured on a real component:
+	 * <ul>
+	 * <li>a widget named with a <b>leading capital</b> is read as a type name, and every binding through it fails to parse
+	 * (<code>expecting: '(' while parsing (ProcessBrowser.selected != null)</code>). Name widgets in lowerCamelCase;</li>
+	 * <li>a binding matches a behaviour on <b>arity</b>, not on visibility: a non-public behaviour is perfectly reachable, while
+	 * <code>data.doIt()</code> against a model declaring only <code>doIt(X)</code> is not;</li>
+	 * <li><code>x.delete()</code> never <em>parses</em>: <code>delete</code> is a keyword that fml.sablecc leaves out of
+	 * <code>authorized_kw_in_composite_ident</code>, so any member of that name is unreachable - expose a differently-named behaviour;</li>
+	 * <li>a <b>widget-derived value cannot be passed as an argument</b>: <code>data.doSomething(browser.selected)</code> does not resolve
+	 * although <code>browser.selected.doSomething()</code> does, and the same argument taken from a model path does. Design the behaviour so
+	 * that the selection is the receiver, or give it a no-argument form.</li>
+	 * <li>a <code>controller.*</code> binding needs the controller class on the classpath. The components declare
+	 * {@link org.openflexo.technologyadapter.gina.controller.FMLControlledFIBController}, which lives in <b>gina-ta-ui</b> and extends
+	 * FlexoFIBController, where <code>iconForObject(Object)</code> is declared and alive. A headless suite carrying only gina-ta reports
+	 * every such binding unresolved - a classpath artefact, not a defect.</li>
+	 * </ul>
+	 * 
 	 * @param concept
 	 * @param modelSlot
 	 */

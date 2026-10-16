@@ -23,6 +23,7 @@ package org.openflexo.technologyadapter.gina;
 import org.openflexo.foundation.fml.annotations.DeclareModelSlots;
 import org.openflexo.foundation.fml.annotations.DeclareResourceFactories;
 import org.openflexo.foundation.fml.annotations.DeclareVirtualModelInstanceNatures;
+import org.openflexo.foundation.fml.rm.CompilationUnitResourceFactory;
 import org.openflexo.foundation.resource.FlexoResourceCenter;
 import org.openflexo.foundation.resource.FlexoResourceCenterService;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
@@ -127,7 +128,11 @@ public class GINATechnologyAdapter extends TechnologyAdapter<GINATechnologyAdapt
 
 	@Override
 	public <I> boolean isIgnorable(FlexoResourceCenter<I> resourceCenter, I contents) {
-		return false;
+		// A .fib / .inspector stored inside a Xxx.fml/ container is a user interface driven by that VirtualModel, and
+		// belongs to the PLATFORM: FIBComponentResourceFactory (flexo-foundation) registers it and links it back into
+		// its CompilationUnitResource. Claiming it here too would build a second resource for the same artefact, with
+		// the same default URI.
+		return FlexoResourceCenter.isContainedInDirectoryWithSuffix(resourceCenter, contents, CompilationUnitResourceFactory.FML_SUFFIX);
 	}
 
 	/*@Override
@@ -169,7 +174,8 @@ public class GINATechnologyAdapter extends TechnologyAdapter<GINATechnologyAdapt
 		GINAResourceRepository<I> returned = resourceCenter.retrieveRepository(GINAResourceRepository.class, this);
 		if (returned == null) {
 			returned = GINAResourceRepository.instanciateNewRepository(this, resourceCenter);
-			resourceCenter.registerRepository(returned, GINAResourceRepository.class, this);
+			// Another thread may have registered one meanwhile: use the registered one (CORE-D-25)
+			returned = resourceCenter.registerRepository(returned, GINAResourceRepository.class, this);
 		}
 		return returned;
 	}

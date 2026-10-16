@@ -33,6 +33,11 @@ import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.annotations.DeclareEditionActions;
 import org.openflexo.foundation.fml.annotations.DeclareFetchRequests;
 import org.openflexo.foundation.fml.annotations.DeclareFlexoRoles;
+import org.openflexo.foundation.fml.annotations.FML;
+import org.openflexo.foundation.fml.annotations.FMLAttribute;
+import org.openflexo.foundation.fml.annotations.FMLAttribute.AttributeKind;
+import org.openflexo.foundation.fml.annotations.SeeAlso;
+import org.openflexo.foundation.fml.annotations.UsageExample;
 import org.openflexo.foundation.resource.FlexoResource;
 import org.openflexo.foundation.technologyadapter.FreeModelSlot;
 import org.openflexo.foundation.technologyadapter.ModelSlot;
@@ -66,6 +71,15 @@ import org.openflexo.toolbox.StringUtils;
  * 
  * @author Sylvain Guérin
  * 
+ *
+ * @deprecated <b>Replaced by the container convention.</b> A user interface is no longer federated through a model slot pointing at a
+ *             <code>.fib</code> by URI: it is an ordinary GINA component stored beside the FML source, in the <code>Xxx.fml/</code>
+ *             container, and resolved by <code>FlexoConcept.getUIComponentResource()</code>.
+ *             <p>
+ *             The model slot carried no instance-level data - its instance held only the URI of a shared, read-only template - and its link
+ *             broke <b>silently</b>: an URI resolving to nothing simply made the VirtualModel lose its nature, with nothing logged.
+ *             <p>
+ *             This whole technology adapter is to be removed once its remaining consumers are ported.
  */
 @DeclareFlexoRoles({ FIBComponentRole.class })
 @DeclareEditionActions({ ConfigureGINAFIBComponent.class })
@@ -73,6 +87,17 @@ import org.openflexo.toolbox.StringUtils;
 @ModelEntity
 @ImplementationClass(FIBComponentModelSlot.FIBComponentModelSlotImpl.class)
 @XMLElement
+@FML(
+		value = "FIBComponent",
+		description = "<html>This ModelSlot represents access to a GINAFIBComponent, a graphical user interface<br>"
+				+ "declared from a .fib template, whose variables are bound to the model through a list of assignments"
+				+ "</html>",
+		examples = { @UsageExample(
+				example = "GINAFIBComponent ui with GINA::FIBComponent(templateComponentURI=\"http://acme.org/MyComponent.fib\","
+						+ "assignments={VariableAssignment:(variable=\"data\",value=this)});",
+				description = "Declares a model slot called 'ui' bound to the 'MyComponent.fib' template, whose 'data' variable is this instance") },
+		references = { @SeeAlso(ConfigureGINAFIBComponent.class) })
+@Deprecated
 public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, GINAFIBComponentResource> {
 
 	@PropertyIdentifier(type = String.class)
@@ -84,6 +109,21 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 
 	@Getter(value = TEMPLATE_COMPONENT_URI_KEY)
 	@XMLAttribute
+	/**
+	 * BEWARE: this URI is a plain string attribute, resolved lazily by {@link #getTemplateResource()} against the resource manager. When it
+	 * resolves to nothing, {@link org.openflexo.technologyadapter.gina.fml.FMLControlledFIBVirtualModelNature#hasNature} starts returning
+	 * false and the VirtualModel quietly loses its user interface, <b>with nothing logged</b> - the application just shows an empty panel.
+	 * 
+	 * <p>
+	 * {@link FIBComponentModelSlotMustReferenceNonNullTemplateResource} below does report it as a validation error, so the break is silent
+	 * at runtime rather than in validation - but that guard only fires if something actually validates the VirtualModel AND the GINA
+	 * technology adapter is activated, since the FML validation model is built from the activated adapters' model-slot classes. A suite that
+	 * only loads its models, or that activates other adapters, sees nothing. Note also that the rule's message key
+	 * <code>fib_component_model_slot_must_reference_nonnull_template_resource</code> is absent from the GINA dictionaries, so the error
+	 * arrives un-localized.
+	 */
+	@FMLAttribute(value = TEMPLATE_COMPONENT_URI_KEY, required = true, description = "<html>URI of the .fib template component."
+			+ "<br>An unresolved URI costs the VirtualModel its FML-controlled-FIB nature, with nothing logged at run-time.</html>")
 	public String getTemplateComponentURI();
 
 	@Setter(TEMPLATE_COMPONENT_URI_KEY)
@@ -98,6 +138,7 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 	@Getter(value = ASSIGNMENTS_KEY, cardinality = Cardinality.LIST, inverse = VariableAssignment.OWNER_KEY)
 	@XMLElement
 	@CloningStrategy(StrategyType.CLONE)
+	@FMLAttribute(value = ASSIGNMENTS_KEY, kind = AttributeKind.InstancesList)
 	public List<VariableAssignment> getAssignments();
 
 	@Setter(ASSIGNMENTS_KEY)
@@ -208,6 +249,7 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 	@ModelEntity
 	@ImplementationClass(VariableAssignment.VariableAssignmentImpl.class)
 	@XMLElement(xmlTag = "VariableAssignment")
+	@FML("VariableAssignment")
 	public static interface VariableAssignment extends ModelSlotObject<GINAFIBComponent> {
 		@PropertyIdentifier(type = FIBComponentModelSlot.class)
 		public static final String OWNER_KEY = "owner";
@@ -229,11 +271,16 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 
 		@Getter(value = VARIABLE_KEY)
 		@XMLAttribute
+		@FMLAttribute(value = VARIABLE_KEY, required = true, description = "<html>name of the variable declared by the .fib component</html>")
 		public String getVariable();
 
 		@Setter(VARIABLE_KEY)
 		public void setVariable(String variable);
 
+		/**
+		 * Deliberately NOT exposed as an {@link FMLAttribute}: it is only used as a fallback when the value binding is unset or invalid
+		 * (see GINAFIBComponent), and a Type-valued FML attribute would need an updater translating it into the current typing space.
+		 */
 		@Getter(value = VARIABLE_TYPE_KEY, isStringConvertable = true)
 		@XMLAttribute
 		public Type getVariableType();
@@ -243,6 +290,7 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 
 		@Getter(value = VALUE_KEY)
 		@XMLAttribute
+		@FMLAttribute(value = VALUE_KEY, required = true, description = "<html>value assigned to that variable</html>")
 		public DataBinding<Object> getValue();
 
 		@Setter(VALUE_KEY)

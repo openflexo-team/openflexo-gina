@@ -70,8 +70,10 @@ import org.openflexo.view.controller.SpecificNaturePerspective;
  * </ul>
  * 
  * @author sylvain
- * 
+ * @deprecated depends on the GINA technology adapter and on the deprecated <code>FMLControlledFIB*Nature</code>s; use
+ *             <code>org.openflexo.fml.gina.controller.FMLGUIPerspective</code>
  */
+@Deprecated
 public class FMLControlledFIBNaturePerspective extends SpecificNaturePerspective<GINATechnologyAdapter> {
 
 	static final Logger logger = Logger.getLogger(FMLControlledFIBNaturePerspective.class.getPackage().getName());
