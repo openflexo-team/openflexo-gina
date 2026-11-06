@@ -28,9 +28,6 @@
 		<Localized id="14" value="Icon" lang="English" key="icon" />
 		<Localized id="15" value="icoon" lang="Dutch" key="icon" />
 		<Localized id="16" value="icône" lang="French" key="icon" />
-		<Localized id="17" value="Name" lang="English" key="name" />
-		<Localized id="18" value="Naam" lang="Dutch" key="name" />
-		<Localized id="19" value="Nom" lang="French" key="name" />
 		<Localized id="20" value="Type" lang="English" key="type" />
 		<Localized id="21" value="Type" lang="Dutch" key="type" />
 		<Localized id="22" value="Type" lang="French" key="type" />
