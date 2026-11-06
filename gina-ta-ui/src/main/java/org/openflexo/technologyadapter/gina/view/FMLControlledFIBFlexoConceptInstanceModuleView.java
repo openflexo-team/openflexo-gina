@@ -43,6 +43,7 @@ import org.openflexo.gina.swing.utils.FIBJPanel;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.icon.UtilsIconLibrary;
 import org.openflexo.localization.LocalizedDelegate;
+import org.openflexo.localization.LocalizedSwing;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.technologyadapter.gina.FIBComponentModelSlot;
 import org.openflexo.technologyadapter.gina.FIBComponentModelSlot.VariableAssignment;
@@ -126,7 +127,7 @@ public class FMLControlledFIBFlexoConceptInstanceModuleView extends JPanel imple
 
 			JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-			localizeButton = new JButton(locales.localizedForKey("localize"), UtilsIconLibrary.UK_FLAG);
+			localizeButton = LocalizedSwing.bind(new JButton(locales.localizedForKey("localize"), UtilsIconLibrary.UK_FLAG), locales, "localize");
 			localizeButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -149,7 +150,7 @@ public class FMLControlledFIBFlexoConceptInstanceModuleView extends JPanel imple
 				}
 			});*/
 
-			editButton = new JButton(locales.localizedForKey("edit"), IconLibrary.EDIT_ICON);
+			editButton = LocalizedSwing.bind(new JButton(locales.localizedForKey("edit"), IconLibrary.EDIT_ICON), locales, "edit");
 			editButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -160,7 +161,7 @@ public class FMLControlledFIBFlexoConceptInstanceModuleView extends JPanel imple
 			});
 			bottomPanel.add(editButton);
 
-			doneButton = new JButton(locales.localizedForKey("done"), IconLibrary.VALID_ICON);
+			doneButton = LocalizedSwing.bind(new JButton(locales.localizedForKey("done"), IconLibrary.VALID_ICON), locales, "done");
 			doneButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -171,7 +172,7 @@ public class FMLControlledFIBFlexoConceptInstanceModuleView extends JPanel imple
 			});
 			bottomPanel.add(doneButton);
 
-			saveButton = new JButton(locales.localizedForKey("save"), IconLibrary.SAVE_ICON);
+			saveButton = LocalizedSwing.bind(new JButton(locales.localizedForKey("save"), IconLibrary.SAVE_ICON), locales, "save");
 			saveButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
