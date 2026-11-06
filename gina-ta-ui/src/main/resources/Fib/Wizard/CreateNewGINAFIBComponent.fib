@@ -6,13 +6,13 @@
 	<LocalizedDictionary id="1">
 		<Localized id="2" value="Fib component slot name" lang="English"
 			key="fib_component_slot_name" />
-		<Localized id="3" value="fib_component_slot_name" lang="Dutch"
+		<Localized id="3" value="Naam van het FIB-onderdeelslot" lang="Dutch"
 			key="fib_component_slot_name" />
 		<Localized id="4" value="Nom du slot" lang="French"
 			key="fib_component_slot_name" />
 		<Localized id="5" value="Folder for new component" lang="English"
 			key="folder_for_new_component" />
-		<Localized id="6" value="folder_for_new_component" lang="Dutch"
+		<Localized id="6" value="Map voor het nieuwe onderdeel" lang="Dutch"
 			key="folder_for_new_component" />
 		<Localized id="7" value="Répertoire du nouveau composant"
 			lang="French" key="folder_for_new_component" />
@@ -35,7 +35,7 @@
 		<Localized id="24" value="Waarde" lang="Dutch" key="value" />
 		<Localized id="25" value="Valeur" lang="French" key="value" />
 		<Localized id="26" value="Add action" lang="English" key="add_action" />
-		<Localized id="27" value="add_action" lang="Dutch" key="add_action" />
+		<Localized id="27" value="Actie toevoegen" lang="Dutch" key="add_action" />
 		<Localized id="28" value="Ajouter une action" lang="French" key="add_action" />
 		<Localized id="29" value="Delete action" lang="English"
 			key="delete_action" />
