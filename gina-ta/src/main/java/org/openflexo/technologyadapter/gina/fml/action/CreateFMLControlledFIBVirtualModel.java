@@ -187,7 +187,6 @@ public class CreateFMLControlledFIBVirtualModel extends AbstractCreateNatureSpec
 		performSetParentConcepts();
 		performCreateProperties();
 		performCreateBehaviours();
-		performCreateInspectors();
 		performPostProcessings();
 
 		if (getChoice() == FIBComponentChoice.CreateNewComponent) {
