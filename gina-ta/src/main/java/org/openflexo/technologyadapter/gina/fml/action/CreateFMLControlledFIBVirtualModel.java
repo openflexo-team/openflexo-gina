@@ -272,7 +272,7 @@ public class CreateFMLControlledFIBVirtualModel extends AbstractCreateNatureSpec
 		for (GINAFIBComponentAPIEntry apiEntry : getAPIEntries()) {
 			if (apiEntry.getType() != null) {
 				if (apiEntry.isAPI()) {
-					// Unused FlexoBehaviourParameter newParameter =
+					// Unused FlexoBehaviourArgument newParameter =
 					createParameter(initBehaviour, apiEntry.getName(), apiEntry.getType());
 				}
 			}
