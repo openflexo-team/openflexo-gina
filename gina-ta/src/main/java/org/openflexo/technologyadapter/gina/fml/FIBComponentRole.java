@@ -31,14 +31,12 @@ import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.gina.model.FIBComponent;
 import org.openflexo.pamela.annotations.ImplementationClass;
 import org.openflexo.pamela.annotations.ModelEntity;
-import org.openflexo.pamela.annotations.XMLElement;
 import org.openflexo.technologyadapter.gina.GINATechnologyAdapter;
 import org.openflexo.technologyadapter.gina.fml.FIBComponentRole.FIBComponentRoleImpl;
 import org.openflexo.technologyadapter.gina.model.GINAFIBComponent;
 
 @ModelEntity
 @ImplementationClass(FIBComponentRoleImpl.class)
-@XMLElement
 public interface FIBComponentRole extends FlexoRole<GINAFIBComponent> {
 
 	public GINATechnologyAdapter getModelSlotTechnologyAdapter();

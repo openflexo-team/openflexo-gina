@@ -55,7 +55,6 @@ import org.openflexo.foundation.fml.rt.RunTimeEvaluationContext;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
 import org.openflexo.pamela.annotations.ImplementationClass;
 import org.openflexo.pamela.annotations.ModelEntity;
-import org.openflexo.pamela.annotations.XMLElement;
 import org.openflexo.technologyadapter.gina.FIBComponentModelSlot;
 import org.openflexo.technologyadapter.gina.model.GINAFIBComponent;
 import org.openflexo.technologyadapter.gina.rm.GINAFIBComponentResource;
@@ -77,7 +76,6 @@ import org.openflexo.technologyadapter.gina.rm.GINAFIBComponentResource;
  */
 @ModelEntity
 @ImplementationClass(ConfigureGINAFIBComponent.ConfigureGINAFIBComponentImpl.class)
-@XMLElement
 @FML("ConfigureGINAFIBComponent")
 @Deprecated
 public interface ConfigureGINAFIBComponent

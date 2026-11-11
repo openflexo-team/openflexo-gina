@@ -55,8 +55,6 @@ import org.openflexo.pamela.annotations.ModelEntity;
 import org.openflexo.pamela.annotations.PropertyIdentifier;
 import org.openflexo.pamela.annotations.Remover;
 import org.openflexo.pamela.annotations.Setter;
-import org.openflexo.pamela.annotations.XMLAttribute;
-import org.openflexo.pamela.annotations.XMLElement;
 import org.openflexo.pamela.validation.ValidationError;
 import org.openflexo.pamela.validation.ValidationIssue;
 import org.openflexo.pamela.validation.ValidationRule;
@@ -86,7 +84,6 @@ import org.openflexo.toolbox.StringUtils;
 @DeclareFetchRequests({})
 @ModelEntity
 @ImplementationClass(FIBComponentModelSlot.FIBComponentModelSlotImpl.class)
-@XMLElement
 @FML(
 		value = "FIBComponent",
 		description = "<html>This ModelSlot represents access to a GINAFIBComponent, a graphical user interface<br>"
@@ -108,7 +105,6 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 	public static final String ASSIGNMENTS_KEY = "assignments";
 
 	@Getter(value = TEMPLATE_COMPONENT_URI_KEY)
-	@XMLAttribute
 	/**
 	 * BEWARE: this URI is a plain string attribute, resolved lazily by {@link #getTemplateResource()} against the resource manager. When it
 	 * resolves to nothing, {@link org.openflexo.technologyadapter.gina.fml.FMLControlledFIBVirtualModelNature#hasNature} starts returning
@@ -136,7 +132,6 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 	public void setTemplateResource(GINAFIBComponentResource templateResource);
 
 	@Getter(value = ASSIGNMENTS_KEY, cardinality = Cardinality.LIST, inverse = VariableAssignment.OWNER_KEY)
-	@XMLElement
 	@CloningStrategy(StrategyType.CLONE)
 	@FMLAttribute(value = ASSIGNMENTS_KEY, kind = AttributeKind.InstancesList)
 	public List<VariableAssignment> getAssignments();
@@ -248,7 +243,6 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 
 	@ModelEntity
 	@ImplementationClass(VariableAssignment.VariableAssignmentImpl.class)
-	@XMLElement(xmlTag = "VariableAssignment")
 	@FML("VariableAssignment")
 	public static interface VariableAssignment extends ModelSlotObject<GINAFIBComponent> {
 		@PropertyIdentifier(type = FIBComponentModelSlot.class)
@@ -270,7 +264,6 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 		public void setOwner(FIBComponentModelSlot customColumn);
 
 		@Getter(value = VARIABLE_KEY)
-		@XMLAttribute
 		@FMLAttribute(value = VARIABLE_KEY, required = true, description = "<html>name of the variable declared by the .fib component</html>")
 		public String getVariable();
 
@@ -282,14 +275,12 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 		 * (see GINAFIBComponent), and a Type-valued FML attribute would need an updater translating it into the current typing space.
 		 */
 		@Getter(value = VARIABLE_TYPE_KEY, isStringConvertable = true)
-		@XMLAttribute
 		public Type getVariableType();
 
 		@Setter(VARIABLE_TYPE_KEY)
 		public void setVariableType(Type type);
 
 		@Getter(value = VALUE_KEY)
-		@XMLAttribute
 		@FMLAttribute(value = VALUE_KEY, required = true, description = "<html>value assigned to that variable</html>")
 		public DataBinding<Object> getValue();
 
@@ -297,7 +288,6 @@ public interface FIBComponentModelSlot extends FreeModelSlot<GINAFIBComponent, G
 		public void setValue(DataBinding<Object> value);
 
 		@Getter(value = MANDATORY_KEY, defaultValue = "false")
-		@XMLAttribute
 		public boolean isMandatory();
 
 		@Setter(MANDATORY_KEY)
