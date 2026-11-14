@@ -46,7 +46,7 @@ import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.fml.annotations.FML;
 import org.openflexo.foundation.fml.editionaction.EditionAction;
 import org.openflexo.foundation.fml.editionaction.TechnologySpecificActionDefiningReceiver;
-import org.openflexo.foundation.fml.rt.FMLExecutionException;
+import org.openflexo.foundation.fml.rt.error.FMLExecutionException;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.FreeModelSlotInstance;
 import org.openflexo.foundation.fml.rt.ModelSlotInstance;
