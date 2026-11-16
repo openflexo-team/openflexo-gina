@@ -113,17 +113,22 @@ public interface ConfigureGINAFIBComponent
 				FlexoConceptInstance fci = evaluationContext.getFlexoConceptInstance();
 				ModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> msi = fci.getModelSlotInstance(modelSlot);
 
-				// No template (a missing or renamed .fib): the instance is created without user interface, as before. This action is appended
-				// to every creation scheme of an FML-controlled FIB virtual model: an error here would fail every creation
-				GINAFIBComponent fibComponent = null;
-				if (modelSlot.getTemplateResource() != null) {
-					try {
-						fibComponent = modelSlot.getTemplateResource().getResourceData();
-					} catch (ResourceLoadingCancelledException e) {
-						throw new FMLCancellation("Loading of the template component was cancelled", e);
-					} catch (FileNotFoundException | FlexoException e) {
-						throw new FMLTechnologyError("Cannot load the template component of " + modelSlot.getName() + ": " + e.getMessage(), e);
-					}
+				// No template (a missing or renamed .fib) is an error that FML can catch (CORE-F-11 phase 7, decided with the user): it used to
+				// give an instance without user interface, the symptom of a modeler that silently shows nothing
+				if (modelSlot.getTemplateResource() == null) {
+					throw new FMLTechnologyError("No template component for " + modelSlot.getName() + " (templateComponentURI="
+							+ modelSlot.getTemplateComponentURI() + ")");
+				}
+				GINAFIBComponent fibComponent;
+				try {
+					fibComponent = modelSlot.getTemplateResource().getResourceData();
+				} catch (ResourceLoadingCancelledException e) {
+					throw new FMLCancellation("Loading of the template component was cancelled", e);
+				} catch (FileNotFoundException | FlexoException e) {
+					throw new FMLTechnologyError("Cannot load the template component of " + modelSlot.getName() + ": " + e.getMessage(), e);
+				}
+				if (fibComponent == null) {
+					throw new FMLTechnologyError("The template component of " + modelSlot.getName() + " is empty");
 				}
 
 				if (msi == null) {
@@ -132,10 +137,6 @@ public interface ConfigureGINAFIBComponent
 					fci.addToActors(msi);
 				}
 
-				if (fibComponent == null) {
-					logger.warning("No template defined for " + modelSlot);
-					return null;
-				}
 				return fibComponent;
 			}
 			throw new FMLResolutionError("ConfigureGINAFIBComponent must be assigned to a FIBComponentModelSlot, not " + getAssignedFlexoProperty());

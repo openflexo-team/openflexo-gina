@@ -27,3 +27,7 @@ a warning is logged and the action gives null. This action is appended to every 
 an error would fail every creation. A template that cannot be loaded is still a typed error.
 
 **Verified (2026-11-16).** ECJ compiles gina-ta (no test module).
+
+**Revisited with FML try/catch (`CORE-F-11` phase 7, decided with the user, 2026-11-16).** No template component, or an empty one, is an
+`FMLTechnologyError` that FML can catch: the instance is no longer created without user interface (the symptom of a modeler that silently
+shows nothing). No FML of the workspace calls the action; it is appended by the creation of an FML-controlled FIB virtual model.
