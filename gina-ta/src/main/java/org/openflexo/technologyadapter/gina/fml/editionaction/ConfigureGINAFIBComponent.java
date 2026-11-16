@@ -46,6 +46,9 @@ import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.fml.annotations.FML;
 import org.openflexo.foundation.fml.editionaction.EditionAction;
 import org.openflexo.foundation.fml.editionaction.TechnologySpecificActionDefiningReceiver;
+import org.openflexo.foundation.fml.rt.error.FMLResolutionError;
+import org.openflexo.foundation.fml.rt.error.FMLCancellation;
+import org.openflexo.foundation.fml.rt.error.FMLTechnologyError;
 import org.openflexo.foundation.fml.rt.error.FMLExecutionException;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.FreeModelSlotInstance;
@@ -110,13 +113,17 @@ public interface ConfigureGINAFIBComponent
 				FlexoConceptInstance fci = evaluationContext.getFlexoConceptInstance();
 				ModelSlotInstance<FIBComponentModelSlot, GINAFIBComponent> msi = fci.getModelSlotInstance(modelSlot);
 
+				// No template (a missing or renamed .fib): the instance is created without user interface, as before. This action is appended
+				// to every creation scheme of an FML-controlled FIB virtual model: an error here would fail every creation
 				GINAFIBComponent fibComponent = null;
-				try {
-					if (modelSlot.getTemplateResource() != null) {
+				if (modelSlot.getTemplateResource() != null) {
+					try {
 						fibComponent = modelSlot.getTemplateResource().getResourceData();
+					} catch (ResourceLoadingCancelledException e) {
+						throw new FMLCancellation("Loading of the template component was cancelled", e);
+					} catch (FileNotFoundException | FlexoException e) {
+						throw new FMLTechnologyError("Cannot load the template component of " + modelSlot.getName() + ": " + e.getMessage(), e);
 					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
 				}
 
 				if (msi == null) {
@@ -129,18 +136,9 @@ public interface ConfigureGINAFIBComponent
 					logger.warning("No template defined for " + modelSlot);
 					return null;
 				}
-
-				try {
-					return modelSlot.getTemplateResource().getResourceData();
-				} catch (FileNotFoundException e) {
-					throw new FMLExecutionException(e);
-				} catch (ResourceLoadingCancelledException e) {
-					throw new FMLExecutionException(e);
-				} catch (FlexoException e) {
-					throw new FMLExecutionException(e);
-				}
+				return fibComponent;
 			}
-			return null;
+			throw new FMLResolutionError("ConfigureGINAFIBComponent must be assigned to a FIBComponentModelSlot, not " + getAssignedFlexoProperty());
 
 		}
 	}
