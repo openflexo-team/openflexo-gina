@@ -292,11 +292,11 @@ public class CreateFMLControlledFIBVirtualModel extends AbstractCreateNatureSpec
 							.makeNewEmbeddedAction(initBehaviour.getControlGraph(), null, this);
 					createAssignAction.setModelSlot(uiModelSlot);
 					createAssignAction.setEditionActionClass(ExpressionAction.class);
-					createAssignAction.setAssignation(new DataBinding<>(apiEntry.getName()));
+					createAssignAction.setAssignation(new DataBinding<>("this." + apiEntry.getName()));
 					createAssignAction.doAction();
 					AssignationAction<?> assignAction = (AssignationAction<?>) createAssignAction.getNewEditionAction();
 					((ExpressionAction<?>) assignAction.getAssignableAction())
-							.setExpression(new DataBinding<>("parameters." + apiEntry.getName()));
+							.setExpression(new DataBinding<>(apiEntry.getName()));
 					assignAction.setName("assign");
 				}
 			}
