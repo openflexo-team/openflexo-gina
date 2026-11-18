@@ -50,7 +50,7 @@ import org.openflexo.connie.BindingModel;
 import org.openflexo.connie.DataBinding;
 import org.openflexo.connie.type.PrimitiveType;
 import org.openflexo.foundation.FlexoEditor;
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoActionFactory;
@@ -168,7 +168,7 @@ public class CreateFMLControlledFIBVirtualModel extends AbstractCreateNatureSpec
 	}
 
 	@Override
-	protected void doAction(Object context) throws FlexoException {
+	protected void doAction(Object context) throws OpenflexoRuntimeException {
 
 		Progress.progress(getLocales().localizedForKey("create_virtual_model"));
 
@@ -181,7 +181,7 @@ public class CreateFMLControlledFIBVirtualModel extends AbstractCreateNatureSpec
 		} catch (SaveResourceException e) {
 			throw new SaveResourceException(null);
 		} catch (ModelDefinitionException e) {
-			throw new FlexoException(e);
+			throw new OpenflexoRuntimeException(e);
 		}
 
 		performSetParentConcepts();

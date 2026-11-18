@@ -46,7 +46,7 @@ import java.io.FileNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openflexo.foundation.FlexoEditor;
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.FlexoServiceManager;
 import org.openflexo.foundation.resource.FlexoResourceCenter;
 import org.openflexo.foundation.resource.RepositoryFolder;
@@ -114,13 +114,13 @@ public class TestLoadGINAFIBComponent extends OpenflexoTestCase {
 	/**
 	 * Test load FIB component
 	 * 
-	 * @throws FlexoException
+	 * @throws OpenflexoRuntimeException
 	 * @throws ResourceLoadingCancelledException
 	 * @throws FileNotFoundException
 	 */
 	@Test
 	@TestOrder(2)
-	public void testLoadComponent() throws FileNotFoundException, ResourceLoadingCancelledException, FlexoException {
+	public void testLoadComponent() throws FileNotFoundException, ResourceLoadingCancelledException, OpenflexoRuntimeException {
 
 		log("testLoadComponent()");
 

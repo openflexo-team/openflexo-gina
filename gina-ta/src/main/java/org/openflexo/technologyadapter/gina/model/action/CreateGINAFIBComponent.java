@@ -43,7 +43,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoEditor;
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoAction;
@@ -112,12 +112,12 @@ public class CreateGINAFIBComponent
 	}
 
 	@Override
-	protected void doAction(Object context) throws FlexoException {
+	protected void doAction(Object context) throws OpenflexoRuntimeException {
 
 		try {
 			componentResource = _makeGINAFIBComponentResource();
 		} catch (ModelDefinitionException e) {
-			throw new FlexoException(e);
+			throw new OpenflexoRuntimeException(e);
 		}
 
 		/*GINATechnologyAdapter ginaTA = getServiceManager().getTechnologyAdapterService().getTechnologyAdapter(GINATechnologyAdapter.class);
@@ -163,7 +163,7 @@ public class CreateGINAFIBComponent
 				e.printStackTrace();
 			} catch (ResourceLoadingCancelledException e) {
 				e.printStackTrace();
-			} catch (FlexoException e) {
+			} catch (OpenflexoRuntimeException e) {
 				e.printStackTrace();
 			}
 		}

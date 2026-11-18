@@ -36,7 +36,7 @@ import javax.swing.JPanel;
 import org.openflexo.Flexo;
 import org.openflexo.connie.exception.NullReferenceException;
 import org.openflexo.connie.exception.TypeMismatchException;
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FreeModelSlotInstance;
@@ -593,7 +593,7 @@ public class FMLControlledFIBVirtualModelInstanceModuleView extends JPanel
 				e.printStackTrace();
 			} catch (ResourceLoadingCancelledException e) {
 				e.printStackTrace();
-			} catch (FlexoException e) {
+			} catch (OpenflexoRuntimeException e) {
 				e.printStackTrace();
 			}
 		}

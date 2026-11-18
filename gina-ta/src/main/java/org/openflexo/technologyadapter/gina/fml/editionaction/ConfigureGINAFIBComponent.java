@@ -42,7 +42,7 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.logging.Logger;
 
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.fml.annotations.FML;
 import org.openflexo.foundation.fml.editionaction.EditionAction;
 import org.openflexo.foundation.fml.editionaction.TechnologySpecificActionDefiningReceiver;
@@ -124,7 +124,7 @@ public interface ConfigureGINAFIBComponent
 					fibComponent = modelSlot.getTemplateResource().getResourceData();
 				} catch (ResourceLoadingCancelledException e) {
 					throw new FMLCancellation("Loading of the template component was cancelled", e);
-				} catch (FileNotFoundException | FlexoException e) {
+				} catch (FileNotFoundException | OpenflexoRuntimeException e) {
 					throw new FMLTechnologyError("Cannot load the template component of " + modelSlot.getName() + ": " + e.getMessage(), e);
 				}
 				if (fibComponent == null) {

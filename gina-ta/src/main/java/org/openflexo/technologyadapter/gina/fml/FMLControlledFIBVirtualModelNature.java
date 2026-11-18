@@ -40,7 +40,7 @@ package org.openflexo.technologyadapter.gina.fml;
 
 import java.io.FileNotFoundException;
 
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.fml.FMLCompilationUnit;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.VirtualModelNature;
@@ -121,7 +121,7 @@ public class FMLControlledFIBVirtualModelNature implements VirtualModelNature {
 				e.printStackTrace();
 			} catch (ResourceLoadingCancelledException e) {
 				e.printStackTrace();
-			} catch (FlexoException e) {
+			} catch (OpenflexoRuntimeException e) {
 				e.printStackTrace();
 			}
 		}

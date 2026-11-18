@@ -40,7 +40,7 @@ package org.openflexo.technologyadapter.gina.fml;
 
 import java.io.FileNotFoundException;
 
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptNature;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -108,7 +108,7 @@ public class FMLControlledFIBFlexoConceptNature implements FlexoConceptNature {
 				e.printStackTrace();
 			} catch (ResourceLoadingCancelledException e) {
 				e.printStackTrace();
-			} catch (FlexoException e) {
+			} catch (OpenflexoRuntimeException e) {
 				e.printStackTrace();
 			}
 		}
